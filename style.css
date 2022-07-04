@@ -1,0 +1,153 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Varela', sans-serif;
+}
+
+.imgUrl{
+    background:url(img/libros.jpg)no-repeat fixed center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-bar{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    background-color: #f8de7e38;
+    position: sticky;
+    top: 0;
+}
+
+.links {
+    text-decoration: none;
+    color: whitesmoke;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+}
+
+.proa{
+    letter-spacing: 20px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.marca-centrada {
+    position: relative;
+    bottom: 240px;
+}
+
+.marca-centrada h5{
+    display: block;
+    color: whitesmoke;
+    font-family: monospace;
+    white-space: nowrap;
+    border-right: 2px solid;
+    width: 29ch;
+    animation: typing 2.5s steps(29), blink .5s infinite step-end alternate;
+    overflow: hidden;
+}
+
+@keyframes typing {
+    from{width: 0;}
+} 
+
+@keyframes blink {
+    50% {border-color: transparent;}
+}
+
+
+/* Tienda,carrito y medias de estos */
+
+main {
+    display: flex;
+}
+
+.tienda-container{
+    display: flex;
+    justify-content:space-between;
+}
+
+.galeriaCarrito .tarjetaResponsive{
+    width: 250px;
+}
+
+.bodyResponsive .text-muted{
+    margin: 0;
+}
+
+.tarjetaResponsive{
+    width:300px;
+    border: 1px solid #b41313;
+    border-radius: 5px;
+    margin: 1rem;
+}
+
+.imgContenedor{
+    display: flex;
+    align-items: center;
+}
+
+@media(max-width:767px){
+    .tarjetaResponsive{
+        width: 220px;
+    }
+    .tienda-container{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .imgResponsive {
+        height: 200px;
+        position: relative;
+        left: 25px;
+    }
+    .bodyResponsive{
+        position: relative;
+        left: 25px;
+    }
+    .cartImgResponsive{
+        height: 80px;
+    }
+    .cartResponsive {
+        flex-direction: row;
+    }
+    .row>* {
+        width: auto;
+    }
+    .carritoCuerpo {
+        display: flex;
+        flex-direction: column;
+    }
+    .galeriaCarrito .card-group .row {
+        flex-wrap: nowrap;
+    }
+    .bodyResponsive .text-muted{
+        margin: 0;
+    }
+}
+
+@media (max-width: 767px) {
+
+    .carrito {
+        position: sticky;
+        bottom: 0;
+        background-color: #587584;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .galeriaCarrito{
+        display: flex;
+        overflow-x: scroll;
+    }
+}
