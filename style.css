@@ -4,7 +4,7 @@
     font-family: 'Varela', sans-serif;
 }
 
-.imgUrl{
+.img-url{
     background:url(img/libros.jpg)no-repeat fixed center;
     background-size: cover;
     height: 100vh;
@@ -16,17 +16,22 @@
 
 .nav-bar{
     width: 100%;
-    padding: 10px;
-    display: flex;
-    justify-content: space-around;
-    background-color: #f8de7e38;
+    background-color: #e9d1787d;
     position: sticky;
     top: 0;
 }
 
+.icon {
+    color: #000000;
+}
+
+.nav-lista{
+    justify-content: flex-end;
+}
+
 .links {
     text-decoration: none;
-    color: whitesmoke;
+    color: #000000;
     font-size: 1.2rem;
     letter-spacing: 3px;
 }
@@ -44,9 +49,14 @@
     bottom: 240px;
 }
 
+.marca-centrada{
+    background-color: #e9d1787d;
+}
+
 .marca-centrada h5{
     display: block;
-    color: whitesmoke;
+    margin-bottom: 0px;
+    color: #000000;
     font-family: monospace;
     white-space: nowrap;
     border-right: 2px solid;
@@ -68,6 +78,7 @@
 
 main {
     display: flex;
+    background-color: #f3f0e1;
 }
 
 .tienda-container{
@@ -75,60 +86,83 @@ main {
     justify-content:space-between;
 }
 
-.galeriaCarrito .tarjetaResponsive{
+#tienda-titulo{
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.galeria-carrito .tarjeta-responsive{
     width: 250px;
 }
 
-.bodyResponsive .text-muted{
+.carrito{
+    min-width: 282px;
+    margin-top: 1rem;
+}
+
+.carrito h4,h5{
+    text-align: center;
+}
+
+.botones {
+    display: flex;
+    justify-content: center;
+}
+
+.empty{
+    min-width: 90px;
+}
+
+.body-responsive .text-muted{
     margin: 0;
 }
 
-.tarjetaResponsive{
-    width:300px;
-    border: 1px solid #b41313;
-    border-radius: 5px;
+.tarjeta-responsive{
+    width:280px;
+    background-color: #f0f0f060;
+    box-shadow: 2px 2px 5px -1px rgb(0 0 0 / 70%);
     margin: 1rem;
 }
 
-.imgContenedor{
+.img-contenedor{
     display: flex;
     align-items: center;
 }
 
 @media(max-width:767px){
-    .tarjetaResponsive{
+    .tarjeta-responsive{
         width: 220px;
     }
     .tienda-container{
         flex-wrap: wrap;
         justify-content: center;
     }
-    .imgResponsive {
+    .img-responsive {
         height: 200px;
         position: relative;
         left: 25px;
     }
-    .bodyResponsive{
+    .body-responsive{
         position: relative;
         left: 25px;
     }
-    .cartImgResponsive{
+    .cart-img-responsive{
         height: 80px;
     }
-    .cartResponsive {
+    .cart-responsive {
         flex-direction: row;
     }
     .row>* {
         width: auto;
     }
-    .carritoCuerpo {
+    .carrito-cuerpo {
         display: flex;
         flex-direction: column;
     }
-    .galeriaCarrito .card-group .row {
+    .galeria-carrito .card-group .row {
         flex-wrap: nowrap;
     }
-    .bodyResponsive .text-muted{
+    .body-responsive .text-muted{
         margin: 0;
     }
 }
@@ -138,7 +172,7 @@ main {
     .carrito {
         position: sticky;
         bottom: 0;
-        background-color: #587584;
+        background-color: #606c38;
     }
 
     main {
@@ -146,7 +180,7 @@ main {
         flex-direction: column;
     }
 
-    .galeriaCarrito{
+    .galeria-carrito{
         display: flex;
         overflow-x: scroll;
     }

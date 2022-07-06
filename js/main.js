@@ -1,26 +1,31 @@
 import { obtenerProductos,traerProducto } from "./firebase.js";
+const galeriaCarrito= document.querySelector('.galeria-carrito')
+const carrito=[]
+let total = 0
+let carritoRep={}
+
 
 const construirTarjeta= async (productosArray) => {
     
     const productos = await productosArray
-    const contenedorProductos= document.querySelector('.productsContainer')
+    const contenedorProductos= document.querySelector('.products-container')
         
         productos.forEach(producto => {
             const card= document.createElement('div')
             card.classList.add('card-group')
 
             card.innerHTML= `
-                <div class= "row tarjetaResponsive" id= ${producto.data().codigo}>
-                    <div class="col-md-4 imgContenedor">          
-                        <img src= ${producto.data().img} class= 'img-fluid imgResponsive' alt=${producto.data().libro}>
+                <div class= "row tarjeta-responsive" id= ${producto.data().codigo}>
+                    <div class="col-md-4 img-contenedor">          
+                        <img src= ${producto.data().img} class= 'img-fluid img-responsive' alt=${producto.data().libro}>
                     </div>
                     <div class="col-md-8">
-                        <div class= "card-body bodyResponsive">
+                        <div class= "card-body body-responsive">
                             <p class= "card-title"> ${producto.data().libro}</p>
                             <p class= "card-title"> ${producto.data().autor}</p>
                             <p class= "card-title"> Categoria: ${producto.data().genero}</p>
                             <p class="card-title">Precio: <b>$${producto.data().precio}</b></p>
-                            <button class= "btn btn-outline-dark btn-sm comprarBtn" id="${producto.id}">Comprar</button>
+                            <button class= "btn btn-outline-dark btn-sm comprar-btn" data-id="${producto.id}" id="${producto.id}">Comprar</button>
                             
                         </div>
                     </div> 
@@ -30,40 +35,31 @@ const construirTarjeta= async (productosArray) => {
         });
     alHacerClick()    
 }
-
-//El parametro es la funcion que esta en firebase y obtiene todos los documentos de PRODUCTOS
 construirTarjeta(obtenerProductos())
 
-
-//Me traigo todos los botones y Cuando haces click en un boton llama a la funcion agregarAlCarrito que se trae el e.target.id y le pasa como parametro para traerProducto(). Luego le pide que le retorne el documento que tenga el mismo id.
 const alHacerClick= ()=>{
-    const comprarBoton = document.querySelectorAll('.comprarBtn')
+    const comprarBoton = document.querySelectorAll('.comprar-btn')
     comprarBoton.forEach(btn=>btn.addEventListener('click', agregarAlCarrito))
 }
 
-
-//Creo un array para guardar todos los documentos clickeados en el DOM. Exporto carrito para usarlo en sweetalert.js
-const carrito=[]
-/* let totalRepetido=0 */
 const agregarAlCarrito = async (e)=>{
 
     const productoClickeado = await traerProducto(e.target.id);
-    
+
     if(chequearCarrito(e.target.id)){
-        agregarCantidadRepetida(e.target.id)
         imprimirTotal(productoClickeado.data().precio)
     } else {
-        imprimirTotal(productoClickeado.data().precio)
         carrito.push(productoClickeado)
+        imprimirTotal(productoClickeado.data().precio)
         construirCartaCarrito()
-    } 
-    
+    }
+    imprimirCantRepetida(e.target.parentElement)
 }
 
-//Trae del html galeriaCarrito y es llamada luego del pusheo al carrito, de esa manera lo recorre y lo imprime en el DOM.Se vacia cada vez que se ejecuta la funcion para q al volver a clickear sobre el boton de comprar no imprima las cartas anteriores del arraya carrito.
+const chequearCarrito = (id)=>carrito.some(producto=>producto.id===id)
+
 const construirCartaCarrito = ()=>{
 
-    const galeriaCarrito= document.querySelector('.galeriaCarrito')
     galeriaCarrito.innerHTML=''
    
     carrito.forEach(producto=> {
@@ -72,16 +68,16 @@ const construirCartaCarrito = ()=>{
             card.classList.add('card-group')
 
             card.innerHTML= `
-                <div class= "row tarjetaResponsive cartResponsive" id= ${producto.data().codigo}>
-                    <div class="col-md-4 imgContenedor">          
-                        <img src= ${producto.data().img} class= 'img-fluid cartImgResponsive' alt=${producto.data().libro}>
+                <div class= "row tarjeta-responsive cart-responsive" id= ${producto.data().codigo}>
+                    <div class="col-md-4 img-contenedor">          
+                        <img src= ${producto.data().img} class= 'img-fluid cart-img-responsive' alt=${producto.data().libro}>
                     </div>
                     <div class="col-md-8">
-                        <div class= "carritoCuerpo card-body">
+                        <div class= "carrito-cuerpo card-body">
                             <small class= "text-muted"> ${producto.data().libro}</small>
                             <small class= "text-muted"> ${producto.data().autor}</small>
                             <small class="text-muted">Precio: <b>$${producto.data().precio}</b></small>
-                            <small class="text-muted"><b>X<span class="cantidad" id="${producto.id}">1</span></b></small>
+                            <small class="text-muted"><b>X<span class="text-muted cantidad" data-id="${producto.id}" id="${producto.id}">1</span></b></small>
                         </div>
                     </div> 
                 </div>
@@ -90,36 +86,48 @@ const construirCartaCarrito = ()=>{
     })
 }
 
-const agregarCantidadRepetida= (id) =>{
-    const cantidad=document.querySelector('.cantidad')
-    if(id === cantidad.id){ 
-        const cantidadParseada= parseInt(cantidad.textContent)
-        cantidad.textContent = cantidadParseada + 1
-        console.log(cantidad.id);
+const imprimirCantRepetida = (btn)=>{
+    
+    const productoRepetido= {
+        id: btn.querySelector('.comprar-btn').dataset.id,
+        cantidad: 1
     }
+
+    if(carritoRep.hasOwnProperty(productoRepetido.id)){
+        productoRepetido.cantidad= carritoRep[productoRepetido.id].cantidad + 1
+    }
+
+    carritoRep[productoRepetido.id]={...productoRepetido}
+    imprimirCantidades()
 }
 
-//Chequea si ya hay un tarjeta igual en el carrito. Es llamada dentro de agregarAlCarrito
-const chequearCarrito = (id)=>carrito.some(producto=>producto.id===id)
+const imprimirCantidades= ()=>{   
+    const spanRep = galeriaCarrito.querySelectorAll('span')
+    spanRep.forEach(x=>{
+        for(let i=0;i<spanRep.length;i++){
+            Object.values(carritoRep).forEach(producto=>{
+                if(spanRep[i].dataset.id === producto.id){
+                    spanRep[i].textContent=producto.cantidad
+                }
+            })
+        }
+    })
+    
+    
+}
 
-
-let total = 0
 const imprimirTotal = (price) =>{
-
-    const totalCarrito= document.querySelector('.totalCarrito')
-    total = total + price
+    const totalCarrito= document.querySelector('.total-carrito')
+    total += price
     totalCarrito.textContent= total
-
 } 
-
 
 const vaciarCarrito = ()=>{
     total=0
-    document.querySelector('.totalCarrito').textContent=0
-    document.querySelector('.galeriaCarrito').innerHTML=''
+    document.querySelector('.total-carrito').textContent=0
+    document.querySelector('.galeria-carrito').innerHTML=''
     carrito.length=0
 }
-
 
 const finalizarCarrito = ()=>{
     const checkout = document.querySelector('.checkout')
