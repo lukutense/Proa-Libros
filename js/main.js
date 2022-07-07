@@ -4,7 +4,6 @@ const carrito=[]
 let total = 0
 let carritoRep={}
 
-
 const construirTarjeta= async (productosArray) => {
     
     const productos = await productosArray
@@ -19,7 +18,7 @@ const construirTarjeta= async (productosArray) => {
                     <div class="col-md-4 img-contenedor">          
                         <img src= ${producto.data().img} class= 'img-fluid img-responsive' alt=${producto.data().libro}>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-8 centrar-contenido">
                         <div class= "card-body body-responsive">
                             <p class= "card-title"> ${producto.data().libro}</p>
                             <p class= "card-title"> ${producto.data().autor}</p>
@@ -72,12 +71,12 @@ const construirCartaCarrito = ()=>{
                     <div class="col-md-4 img-contenedor">          
                         <img src= ${producto.data().img} class= 'img-fluid cart-img-responsive' alt=${producto.data().libro}>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-8 centrar-contenido">
                         <div class= "carrito-cuerpo card-body">
                             <small class= "text-muted"> ${producto.data().libro}</small>
                             <small class= "text-muted"> ${producto.data().autor}</small>
                             <small class="text-muted">Precio: <b>$${producto.data().precio}</b></small>
-                            <small class="text-muted"><b>X<span class="text-muted cantidad" data-id="${producto.id}" id="${producto.id}">1</span></b></small>
+                            <small class="text-muted"><b>X<span class="text-muted cantidad" data-id="${producto.id}" id="${producto.id}"></span></b></small>
                         </div>
                     </div> 
                 </div>
@@ -112,8 +111,6 @@ const imprimirCantidades= ()=>{
             })
         }
     })
-    
-    
 }
 
 const imprimirTotal = (price) =>{
@@ -136,7 +133,9 @@ const finalizarCarrito = ()=>{
     checkout.addEventListener('click', ()=>{
         if(carrito.length > 0){
             Swal.fire({
-                title:"Gracias por su compra"
+                title:"Gracias por su compra",
+                icon: "success",
+                confirmButtonColor: "#606c38"
             })
         }
     })
@@ -144,7 +143,9 @@ const finalizarCarrito = ()=>{
     empty.addEventListener('click', ()=>{
         if(carrito.length > 0){
             Swal.fire({
-                title:"Carrito vacío"
+                title:"Carrito vacío",
+                icon: "success",
+                confirmButtonColor: "#606c38"
             })
         }
     })
