@@ -125,6 +125,13 @@ main {
     margin: 1rem;
 }
 
+.tarjeta-responsive-cart{
+    width: 250px;
+    background-color: #f0f0f060;
+    box-shadow: 2px 2px 5px -1px rgb(0 0 0 / 70%);
+    margin: 1rem;
+}
+
 .img-contenedor{
     display: flex;
     align-items: center;
@@ -143,6 +150,11 @@ main {
         width: 220px;
         height: 360px;
     }
+
+    .tarjeta-responsive-cart{
+        width: 220px;
+    }
+
     .tienda-container{
         flex-wrap: wrap;
         justify-content: center;

@@ -67,7 +67,7 @@ const construirCartaCarrito = ()=>{
             card.classList.add('card-group')
 
             card.innerHTML= `
-                <div class= "row tarjeta-responsive cart-responsive" id= ${producto.data().codigo}>
+                <div class= "row tarjeta-responsive-cart cart-responsive" id= ${producto.data().codigo}>
                     <div class="col-md-4 img-contenedor">          
                         <img src= ${producto.data().img} class= 'img-fluid cart-img-responsive' alt=${producto.data().libro}>
                     </div>
@@ -124,6 +124,7 @@ const vaciarCarrito = ()=>{
     document.querySelector('.total-carrito').textContent=0
     document.querySelector('.galeria-carrito').innerHTML=''
     carrito.length=0
+    spanRep.innerHTML=''
 }
 
 const finalizarCarrito = ()=>{
